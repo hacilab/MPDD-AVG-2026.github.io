@@ -1,1043 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MPDD-AVG Challenge @ ACM MM 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg:       #f7f5f0;
-      --bg2:      #eeeae2;
-      --white:    #ffffff;
-      --card:     #ffffff;
-      --border:   #ddd8ce;
-      --acm-red:  #c1272d;
-      --acm-dark: #1a1a1a;
-      --acm-mid:  #4a4a4a;
-      --acm-muted:#888880;
-      --blue:     #1a4f8a;
-      --shadow:   0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.06);
-      --shadow-lg:0 8px 32px rgba(0,0,0,0.1);
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      background: var(--bg);
-      color: var(--acm-dark);
-      font-family: 'Source Sans 3', sans-serif;
-      font-size: 16px;
-      line-height: 1.65;
-      overflow-x: hidden;
-    }
-
-    /* ─── NAV ─── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 2.5rem;
-      height: 60px;
-      background: var(--white);
-      border-bottom: 3px solid var(--acm-red);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-    .nav-logo {
-      display: flex; align-items: center; gap: 0.6rem;
-      font-family: 'Source Sans 3', sans-serif;
-      font-weight: 700; font-size: 1rem;
-      color: var(--acm-red); text-decoration: none;
-    }
-    .nav-logo-badge {
-      background: var(--acm-red); color: #fff;
-      font-size: 0.68rem; font-weight: 700;
-      padding: 0.18rem 0.5rem; border-radius: 3px;
-      letter-spacing: 0.06em;
-    }
-    .nav-links { display: flex; gap: 0; list-style: none; }
-    .nav-links a {
-      display: block; padding: 0 0.85rem;
-      height: 60px; line-height: 60px;
-      font-size: 0.82rem; font-weight: 600;
-      color: var(--acm-mid); text-decoration: none;
-      border-bottom: 3px solid transparent;
-      margin-bottom: -3px;
-      transition: color .2s, border-color .2s;
-      white-space: nowrap;
-    }
-    .nav-links a:hover { color: var(--acm-red); border-bottom-color: var(--acm-red); }
-    .hamburger {
-      display: none; flex-direction: column; gap: 5px;
-      cursor: pointer; background: none; border: none;
-    }
-    .hamburger span { display: block; width: 22px; height: 2px; background: var(--acm-dark); border-radius: 2px; }
-
-    /* ─── HERO ─── */
-    #home {
-      min-height: 100vh;
-      display: flex; flex-direction: column;
-      padding-top: 60px;
-      position: relative; overflow: hidden;
-    }
-    .hero-stripe {
-      background: var(--acm-red);
-      padding: 0.55rem 2.5rem;
-      font-size: 0.78rem; font-weight: 600;
-      color: rgba(255,255,255,0.92);
-      letter-spacing: 0.05em; text-align: center;
-    }
-    .hero-main {
-      flex: 1;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center;
-      padding: 4rem 2rem 3rem;
-      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
-      position: relative;
-    }
-    .hero-main::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image: repeating-linear-gradient(
-        0deg, transparent, transparent 28px,
-        rgba(193,39,45,0.04) 28px, rgba(193,39,45,0.04) 29px
-      );
-      pointer-events: none;
-    }
-    .hero-conf-badge {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.4rem 1rem;
-      border: 1px solid rgba(193,39,45,0.3);
-      background: rgba(193,39,45,0.05);
-      font-size: 0.75rem; font-weight: 700;
-      color: var(--acm-red);
-      letter-spacing: 0.07em; text-transform: uppercase;
-      margin-bottom: 1.5rem;
-      position: relative; z-index: 1;
-    }
-    .hero-conf-badge::before {
-      content: ''; width: 8px; height: 8px;
-      background: var(--acm-red); border-radius: 50%;
-    }
-    .hero-title {
-      font-family: 'Merriweather', serif;
-      font-size: clamp(2rem, 5vw, 3.6rem);
-      font-weight: 700; line-height: 1.12;
-      color: var(--acm-dark); max-width: 860px;
-      position: relative; z-index: 1;
-      margin-bottom: 0.6rem;
-    }
-    .hero-title .red { color: var(--acm-red); }
-    .hero-subtitle {
-      font-family: 'Merriweather', serif;
-      font-size: clamp(0.95rem, 2vw, 1.15rem);
-      font-weight: 400; font-style: italic;
-      color: var(--acm-mid); max-width: 700px;
-      margin: 0.5rem auto 2rem;
-      position: relative; z-index: 1;
-    }
-    .hero-actions {
-      display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center;
-      position: relative; z-index: 1; margin-bottom: 3rem;
-    }
-    .btn {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      padding: 0.65rem 1.6rem;
-      font-size: 0.82rem; font-weight: 700;
-      letter-spacing: 0.04em; text-decoration: none;
-      cursor: pointer; border: none; transition: all .2s;
-    }
-    .btn-primary { background: var(--acm-red); color: #fff; }
-    .btn-primary:hover { background: #9e1e23; }
-    .btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--acm-mid); }
-    .btn-outline:hover { border-color: var(--acm-red); color: var(--acm-red); }
-    .btn-blue { background: var(--blue); color: #fff; }
-    .btn-blue:hover { background: #153d6e; }
-
-    .hero-stats {
-      width: 100%; background: var(--white);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      display: flex; justify-content: center; flex-wrap: wrap;
-    }
-    .stat {
-      padding: 1.4rem 2.5rem; text-align: center;
-      border-right: 1px solid var(--border);
-    }
-    .stat:last-child { border-right: none; }
-    .stat-num {
-      font-family: 'Merriweather', serif;
-      font-size: 1.8rem; font-weight: 700;
-      color: var(--acm-red); line-height: 1;
-    }
-    .stat-label {
-      font-size: 0.72rem; font-weight: 600;
-      color: var(--acm-muted); letter-spacing: 0.06em;
-      text-transform: uppercase; margin-top: 0.3rem;
-    }
-
-    /* ─── SECTIONS ─── */
-    section { padding: 5rem 2rem; }
-    .container { max-width: 1060px; margin: 0 auto; }
-    .section-label {
-      display: flex; align-items: center; gap: 0.6rem;
-      font-size: 0.72rem; font-weight: 700;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--acm-red); margin-bottom: 0.6rem;
-    }
-    .section-label::after {
-      content: ''; flex: 1; height: 1px;
-      background: rgba(193,39,45,0.2);
-    }
-    .section-title {
-      font-family: 'Merriweather', serif;
-      font-size: clamp(1.5rem, 3.5vw, 2.2rem);
-      font-weight: 700; color: var(--acm-dark);
-      margin-bottom: 0.75rem;
-    }
-    .section-lead {
-      font-size: 1rem; color: var(--acm-mid);
-      line-height: 1.75; max-width: 760px;
-    }
-
-    /* ─── ABOUT ─── */
-    #about { background: var(--white); }
-    .about-grid {
-      display: grid; grid-template-columns: 3fr 2fr;
-      gap: 3rem; margin-top: 2.5rem;
-    }
-    .about-text p {
-      color: var(--acm-mid); line-height: 1.8;
-      font-size: 0.95rem; margin-bottom: 0.9rem;
-    }
-    .about-text p strong { color: var(--acm-dark); }
-    .cite-box {
-      background: var(--bg); border-left: 3px solid var(--acm-red);
-      padding: 0.9rem 1.1rem; font-size: 0.82rem;
-      color: var(--acm-muted); margin-top: 1rem;
-    }
-    .cite-box strong { color: var(--acm-mid); }
-    .highlights { display: flex; flex-direction: column; gap: 0.75rem; }
-    .hl-card {
-      background: var(--bg); border: 1px solid var(--border);
-      border-left: 3px solid var(--acm-red);
-      padding: 1rem 1.2rem;
-      display: flex; gap: 0.9rem; align-items: flex-start;
-    }
-    .hl-icon { font-size: 1.25rem; flex-shrink: 0; margin-top: 0.1rem; }
-    .hl-body h4 { font-size: 0.85rem; font-weight: 700; color: var(--acm-dark); margin-bottom: 0.2rem; }
-    .hl-body p { font-size: 0.8rem; color: var(--acm-muted); line-height: 1.55; }
-
-    /* ─── TRACKS ─── */
-    #tracks { background: var(--bg); }
-    .tracks-tabs {
-      display: flex; gap: 0;
-      border-bottom: 2px solid var(--border);
-      margin-top: 2.5rem; margin-bottom: 2rem;
-    }
-    .tab-btn {
-      padding: 0.6rem 1.4rem;
-      font-size: 0.82rem; font-weight: 700;
-      background: transparent; border: none;
-      border-bottom: 2px solid transparent;
-      color: var(--acm-muted); cursor: pointer;
-      margin-bottom: -2px; letter-spacing: 0.02em;
-      transition: all .2s;
-    }
-    .tab-btn.active { color: var(--acm-red); border-bottom-color: var(--acm-red); }
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-    .dataset-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
-    .ds-card {
-      background: var(--white); border: 1px solid var(--border);
-      padding: 1.4rem 1.6rem; box-shadow: var(--shadow);
-    }
-    .ds-card-head { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.75rem; }
-    .ds-dot { width: 10px; height: 10px; flex-shrink: 0; }
-    .ds-card-head h3 { font-size: 0.9rem; font-weight: 700; color: var(--acm-dark); }
-    .ds-card p { font-size: 0.83rem; color: var(--acm-muted); line-height: 1.7; margin-bottom: 0.65rem; }
-    .tag-list { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.5rem; }
-    .tag {
-      padding: 0.2rem 0.55rem; font-size: 0.7rem; font-weight: 700;
-      border: 1px solid #c8c4bc; color: var(--acm-mid); background: var(--bg);
-    }
-    .tag.red { border-color: rgba(193,39,45,0.3); color: var(--acm-red); background: rgba(193,39,45,0.05); }
-    .subtracks { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
-    .st-card {
-      background: var(--white); border: 1px solid var(--border);
-      border-top: 3px solid var(--acm-red);
-      padding: 1.4rem; text-align: center;
-      box-shadow: var(--shadow); transition: box-shadow .2s, transform .2s;
-    }
-    .st-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
-    .st-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; color: var(--acm-muted); text-transform: uppercase; margin-bottom: 0.4rem; }
-    .st-name { font-family: 'Source Code Pro', monospace; font-size: 1.1rem; font-weight: 700; color: var(--acm-red); margin-bottom: 0.4rem; }
-    .st-desc { font-size: 0.78rem; color: var(--acm-mid); line-height: 1.6; }
-
-    /* ─── TABLE ─── */
-    #dataset { background: var(--white); }
-    .table-wrap { overflow-x: auto; margin-top: 2rem; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
-    th {
-      background: var(--acm-dark); color: #fff;
-      font-size: 0.72rem; font-weight: 700;
-      letter-spacing: 0.06em; text-align: center;
-      padding: 0.75rem 0.8rem; text-transform: uppercase;
-    }
-    th:first-child { text-align: left; }
-    td { text-align: center; padding: 0.65rem 0.8rem; border-bottom: 1px solid var(--border); color: var(--acm-muted); }
-    td:first-child { text-align: left; color: var(--acm-dark); font-weight: 600; }
-    tr:hover td { background: var(--bg); }
-    tr.ours td { background: rgba(193,39,45,0.04); }
-    tr.ours td:first-child { color: var(--acm-red); font-weight: 700; }
-    .check { color: var(--acm-red); font-weight: 700; }
-    .cross { color: #ccc; }
-
-    /* ─── METRICS ─── */
-    #metrics { background: var(--bg); }
-    .metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem; }
-    .metric-group h3 {
-      font-size: 0.72rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.1em;
-      color: var(--acm-red); margin-bottom: 0.75rem;
-      padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);
-    }
-    .metric-item {
-      background: var(--white); border: 1px solid var(--border);
-      padding: 0.8rem 1rem; margin-bottom: 0.5rem;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .metric-name { font-size: 0.86rem; font-weight: 600; color: var(--acm-dark); }
-    .metric-abbr {
-      font-family: 'Source Code Pro', monospace;
-      font-size: 0.72rem; font-weight: 600; color: var(--acm-red);
-      background: rgba(193,39,45,0.08);
-      border: 1px solid rgba(193,39,45,0.2);
-      padding: 0.15rem 0.5rem;
-    }
-    .formula-box {
-      background: var(--white); border: 1px solid var(--border);
-      border-left: 3px solid var(--acm-red);
-      padding: 1.2rem 1.5rem; margin-top: 1.5rem;
-    }
-    .formula-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; color: var(--acm-muted); text-transform: uppercase; margin-bottom: 0.5rem; }
-    .formula { font-family: 'Source Code Pro', monospace; font-size: 0.95rem; color: var(--acm-dark); margin-bottom: 0.4rem; }
-    .formula-note { font-size: 0.78rem; color: var(--acm-muted); }
-
-    /* ─── TIMELINE ─── */
-    #timeline { background: var(--white); }
-    .tl-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 0 3rem; margin-top: 2.5rem; position: relative;
-    }
-    .tl-grid::before {
-      content: ''; position: absolute;
-      left: 50%; top: 0; bottom: 0; width: 1px;
-      background: var(--border); transform: translateX(-50%);
-    }
-    .tl-item { padding: 0 0 2rem 0; position: relative; }
-    .tl-item.right { padding-left: 1.5rem; }
-    .tl-item.left { padding-right: 1.5rem; text-align: right; }
-    .tl-date {
-      display: inline-block;
-      font-family: 'Source Code Pro', monospace;
-      font-size: 0.72rem; font-weight: 600;
-      color: #fff; background: var(--acm-red);
-      padding: 0.2rem 0.6rem; margin-bottom: 0.4rem;
-      letter-spacing: 0.04em;
-    }
-    .tl-item.left .tl-date { float: right; }
-    .tl-dot-center {
-      position: absolute; top: 6px;
-      width: 12px; height: 12px; border-radius: 50%;
-      background: var(--acm-red); border: 2px solid var(--white);
-      box-shadow: 0 0 0 2px var(--acm-red);
-    }
-    .tl-item.left .tl-dot-center { right: -6px; }
-    .tl-item.right .tl-dot-center { left: -6px; }
-    .tl-title { font-size: 0.9rem; font-weight: 700; color: var(--acm-dark); clear: both; margin-bottom: 0.2rem; }
-    .tl-desc { font-size: 0.8rem; color: var(--acm-muted); line-height: 1.6; }
-
-    /* ─── REGISTRATION ─── */
-    #registration { background: var(--bg); }
-    .reg-steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 2rem; }
-    .step-card {
-      background: var(--white); border: 1px solid var(--border);
-      padding: 1.6rem; position: relative; box-shadow: var(--shadow);
-    }
-    .step-num {
-      font-family: 'Merriweather', serif;
-      font-size: 2.5rem; font-weight: 700;
-      color: rgba(193,39,45,0.1);
-      position: absolute; top: 0.75rem; right: 1rem; line-height: 1;
-    }
-    .step-card h3 { font-size: 0.88rem; font-weight: 700; color: var(--acm-dark); margin-bottom: 0.5rem; }
-    .step-card p { font-size: 0.81rem; color: var(--acm-muted); line-height: 1.7; }
-    .step-card a { color: var(--acm-red); text-decoration: none; font-weight: 600; }
-    .step-card a:hover { text-decoration: underline; }
-    .reg-cta {
-      margin-top: 2rem; background: var(--acm-red);
-      padding: 1.8rem 2rem;
-      display: flex; align-items: center; justify-content: space-between; gap: 2rem;
-    }
-    .reg-cta h3 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.2rem; }
-    .reg-cta p { font-size: 0.82rem; color: rgba(255,255,255,0.8); }
-    .btn-white {
-      background: #fff; color: var(--acm-red); font-weight: 700;
-      padding: 0.65rem 1.4rem; text-decoration: none;
-      font-size: 0.82rem; flex-shrink: 0; font-family: inherit;
-    }
-    .btn-white:hover { background: #f0f0f0; }
-    .rules-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem 2rem;
-      margin-top: 1.5rem;
-      background: var(--white); border: 1px solid var(--border);
-      padding: 1.2rem 1.5rem;
-    }
-    .rule-item { font-size: 0.82rem; color: var(--acm-muted); padding: 0.25rem 0; border-bottom: 1px solid var(--border); }
-    .rule-item:nth-last-child(-n+2) { border-bottom: none; }
-    .rule-item span { color: var(--acm-dark); font-weight: 600; }
-
-    /* ─── BASELINE ─── */
-    #baseline { background: var(--white); }
-    .baseline-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem; }
-    .baseline-card {
-      background: var(--bg); border: 1px solid var(--border);
-      border-top: 3px solid var(--acm-red); padding: 1.5rem;
-    }
-    .baseline-card h3 { font-size: 0.88rem; font-weight: 700; color: var(--acm-dark); margin-bottom: 0.6rem; }
-    .baseline-card p { font-size: 0.82rem; color: var(--acm-muted); line-height: 1.7; margin-bottom: 0.6rem; }
-    .link-item {
-      display: flex; align-items: center; gap: 0.5rem;
-      padding: 0.5rem 0.7rem;
-      background: var(--white); border: 1px solid var(--border);
-      margin-bottom: 0.4rem; font-size: 0.8rem;
-    }
-    .link-item .lk { color: var(--acm-muted); flex-shrink: 0; }
-    .link-item a { color: var(--blue); text-decoration: none; font-weight: 600; }
-    .link-item a:hover { text-decoration: underline; }
-    .link-item .tbd { color: var(--acm-muted); font-style: italic; }
-
-    /* ─── ORGANIZERS ─── */
-    #organizers { background: var(--bg); }
-    .org-section-label {
-      font-size: 0.72rem; font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--acm-muted);
-      padding: 0.4rem 0;
-      border-bottom: 1px solid var(--border);
-      margin: 2rem 0 1.25rem;
-    }
-    .org-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 1.25rem;
-    }
-    .org-card {
-      text-align: center; padding: 1.2rem 0.75rem 1rem;
-      background: var(--white); border: 1px solid var(--border);
-      box-shadow: var(--shadow); transition: box-shadow .2s, transform .2s;
-    }
-    .org-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
-    .org-avatar {
-      width: 70px; height: 70px; border-radius: 50%;
-      margin: 0 auto 0.7rem; overflow: hidden;
-      border: 2px solid var(--border); background: var(--bg);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.85rem; font-weight: 700; color: var(--acm-red);
-    }
-    .org-avatar img { width: 100%; height: 100%; object-fit: cover; }
-    .org-name { font-size: 0.78rem; font-weight: 700; color: var(--acm-dark); margin-bottom: 0.15rem; line-height: 1.3; }
-    .org-aff { font-size: 0.68rem; color: var(--acm-muted); line-height: 1.4; }
-
-    /* ─── FOOTER ─── */
-    footer { background: var(--acm-dark); padding: 2rem; text-align: center; }
-    .footer-top { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 1rem; }
-    .footer-top a { font-size: 0.78rem; color: rgba(255,255,255,0.5); text-decoration: none; }
-    .footer-top a:hover { color: #fff; }
-    .footer-sep { width: 60px; height: 1px; background: rgba(255,255,255,0.15); margin: 0 auto 1rem; }
-    .footer-copy { font-size: 0.73rem; color: rgba(255,255,255,0.35); }
-    .footer-red { color: var(--acm-red); font-weight: 700; }
-
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 900px) {
-      nav { padding: 0 1.25rem; }
-      .nav-links {
-        display: none; flex-direction: column;
-        position: absolute; top: 60px; left: 0; right: 0;
-        background: var(--white); border-bottom: 2px solid var(--border); z-index: 999;
-      }
-      .nav-links.open { display: flex; }
-      .nav-links a { height: auto; line-height: 1; padding: 0.8rem 1.25rem; border-bottom: 1px solid var(--border); }
-      .hamburger { display: flex; }
-      .about-grid, .dataset-grid, .metrics-grid, .baseline-grid { grid-template-columns: 1fr; }
-      .subtracks, .reg-steps { grid-template-columns: 1fr !important; }
-      .reg-cta { flex-direction: column; }
-      .hero-stats .stat { padding: 1rem 1.2rem; border-right: none; border-bottom: 1px solid var(--border); width: 50%; }
-      .tl-grid { grid-template-columns: 1fr; }
-      .tl-grid::before { display: none; }
-      .tl-item.left, .tl-item.right { padding: 0 0 1.5rem 1.5rem; text-align: left; }
-      .tl-item.left .tl-date { float: none; }
-      .tl-item.left .tl-dot-center { right: auto; left: -6px; }
-    }
-    @media (max-width: 480px) {
-      .hero-stats .stat { width: 100%; }
-    }
-
-    @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
-    .fu  { animation: fadeUp .55s ease both; }
-    .fu-1 { animation-delay:.08s; }
-    .fu-2 { animation-delay:.16s; }
-    .fu-3 { animation-delay:.24s; }
-    .fu-4 { animation-delay:.32s; }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;600;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <a class="nav-logo" href="#home">
-    <span class="nav-logo-badge">ACM MM 2026</span>
-    MPDD-AVG Challenge
-  </a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#home">Home</a></li>
-    <li><a href="#about">Overview</a></li>
-    <li><a href="#tracks">Tracks</a></li>
-    <li><a href="#dataset">Dataset</a></li>
-    <li><a href="#timeline">Dates</a></li>
-    <li><a href="#registration">Registration</a></li>
-    <li><a href="#baseline">Baseline</a></li>
-    <li><a href="#organizers">Organisation</a></li>
-  </ul>
-  <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-
-<!-- HERO -->
-<section id="home">
-  <div class="hero-stripe">
-    Grand Challenge @ The 34th ACM International Conference on Multimedia &nbsp;·&nbsp; ACM MM 2026
+<header>
+  <div class="header-inner">
+    <a class="site-title" href="index.html">MPDD-AVG 2026</a>
+    <button class="hamburger" onclick="document.querySelector('nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav>
+      <ul>
+        <li><a href="index.html" class="active">Home</a></li>
+        <li>
+          <a href="challenge.html">Challenge ▾</a>
+          <ul>
+            <li><a href="challenge.html#overview">Overview</a></li>
+            <li><a href="challenge.html#dataset">Dataset</a></li>
+            <li><a href="challenge.html#tracks">Tracks &amp; Sub-tracks</a></li>
+            <li><a href="challenge.html#metrics">Evaluation Metrics</a></li>
+            <li><a href="challenge.html#baseline">Baseline &amp; Resources</a></li>
+          </ul>
+        </li>
+        <li><a href="registration.html">Registration</a></li>
+        <li><a href="dates.html">Important Dates</a></li>
+        <li><a href="organisers.html">Organisation</a></li>
+      </ul>
+    </nav>
   </div>
-  <div class="hero-main">
-    <div class="hero-conf-badge fu">Grand Challenge</div>
-    <h1 class="hero-title fu fu-1">
-      <span class="red">MPDD-AVG</span> Challenge 2026
-    </h1>
-    <p class="hero-subtitle fu fu-2">
-      Multimodal Personality-Aware Depression Detection via<br>
-      Audio-Visual Interview and Gait Analysis
-    </p>
-    <div class="hero-actions fu fu-3">
-      <a href="#registration" class="btn btn-primary">Register Now</a>
-      <a href="#tracks" class="btn btn-outline">Explore Tracks</a>
-      <a href="https://github.com/hacilab/" target="_blank" class="btn btn-blue">GitHub ↗</a>
-      <a href="https://hacilab.github.io/MPDDChallenge.github.io/" target="_blank" class="btn btn-outline">MPDD 2025 ↗</a>
+</header>
+
+<div class="banner">
+  <div class="banner-inner">
+    <div class="banner-tag">Grand Challenge @ ACM Multimedia 2026</div>
+    <h1><span class="accent">MPDD-AVG</span> Challenge 2026</h1>
+    <p>Multimodal Personality-Aware Depression Detection via Audio-Visual Interview and Gait Analysis</p>
+    <div class="banner-btns">
+      <a href="registration.html" class="btn btn-red">Register Now</a>
+      <a href="challenge.html" class="btn btn-outline-white">View Challenge</a>
+      <a href="https://github.com/hacilab/" target="_blank" class="btn btn-outline-white">GitHub ↗</a>
     </div>
   </div>
-  <div class="hero-stats fu fu-4">
-    <div class="stat"><div class="stat-num">220</div><div class="stat-label">Participants</div></div>
-    <div class="stat"><div class="stat-num">2</div><div class="stat-label">Age-Specific Datasets</div></div>
-    <div class="stat"><div class="stat-num">6</div><div class="stat-label">Sub-tracks</div></div>
-    <div class="stat"><div class="stat-num">3</div><div class="stat-label">Modalities (A+V+G)</div></div>
-    <div class="stat"><div class="stat-num">Big5</div><div class="stat-label">Personality Annotations</div></div>
-  </div>
-</section>
+</div>
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="container">
-    <div class="section-label">Overview</div>
-    <h2 class="section-title">Call for Participation</h2>
-    <div class="about-grid">
-      <div class="about-text">
-        <p>Depression is a pervasive mental health disorder with a profound impact on global wellbeing, affecting millions and significantly hindering quality of life, productivity, and overall health. The WHO categorizes depression as a leading cause of disability, underscoring its substantial societal and economic burden.</p>
-        <p>Existing approaches predominantly rely on conversational or interview-based modalities with <strong>limited age diversity</strong>, while ambulatory behavioral signatures such as gait characteristics — though recognized as important clinical indicators of psychomotor symptoms — remain largely unexplored in computational frameworks.</p>
-        <p><strong>MPDD-AVG</strong> bridges these gaps by uniquely integrating semi-structured interview behavioral data with continuous gait monitoring from wearable sensors, enabling holistic assessment spanning cognitive-linguistic, affective-paralinguistic, and psychomotor domains. This is an updated version of <strong>MPDD2025 @ ACM MM 2025</strong>.</p>
-        <p>Critically, we provide <strong>raw individual difference annotations</strong> — including Big Five-10 personality dimensions, demographic variables, and health condition labels — explicitly encouraging participants to develop innovative personality-conditioned modeling strategies.</p>
-        <div class="cite-box">
-          <strong>Please cite:</strong> Fu, C., Fu, Z., Zhang, Q., Kuang, X., Dong, J., Su, K., ... & Ishiguro, H. (2025, October). The First MPDD Challenge: Multimodal Personality-aware Depression Detection. In <em>Proceedings of the 33rd ACM International Conference on Multimedia</em> (pp. 13924–13929).
-        </div>
-      </div>
-      <div class="highlights">
-        <div class="hl-card">
-          <div class="hl-icon">🎙️</div>
-          <div class="hl-body">
-            <h4>Audio-Visual Interview</h4>
-            <p>Semi-structured interviews capturing cognitive-linguistic and affective-paralinguistic cues from both young adults and elderly participants.</p>
-          </div>
-        </div>
-        <div class="hl-card">
-          <div class="hl-icon">🚶</div>
-          <div class="hl-body">
-            <h4>Gait Analysis via IMU</h4>
-            <p>Wearable IMU sensors capturing walking speed, stride regularity, and postural dynamics as psychomotor depression indicators.</p>
-          </div>
-        </div>
-        <div class="hl-card">
-          <div class="hl-icon">🧠</div>
-          <div class="hl-body">
-            <h4>Personality-Aware Modeling</h4>
-            <p>Raw Big Five-10 annotations with demographic and health condition data to model inter-individual heterogeneity.</p>
-          </div>
-        </div>
-        <div class="hl-card">
-          <div class="hl-icon">👥</div>
-          <div class="hl-body">
-            <h4>Age-Diverse Population</h4>
-            <p>110 young adults (academic stress) and 110 elderly participants (late-life depression, chronic conditions).</p>
-          </div>
-        </div>
-      </div>
+<div class="page-wrap">
+
+  <div class="intro-block">
+    <p><strong>MPDD-AVG @ ACM MM 2026</strong> advances personalized depression detection by integrating audio-visual, gait, and personality data across young and elderly populations.</p>
+  </div>
+
+  <h2>Welcome to MPDD-AVG 2026!</h2>
+
+  <p>
+    Depression is a prevalent mental health disorder affecting individuals across the lifespan, with significant impact on young adults and the elderly population. However, existing depression detection approaches predominantly rely on conversational or interview-based modalities with limited age diversity, while ambulatory behavioral signatures such as gait characteristics — though recognized as important clinical indicators of psychomotor symptoms — remain largely unexplored.
+  </p>
+  <p>
+    Moreover, current methods establish direct data-to-score mappings without modeling individual differences, overlooking psychomotor domains and the inter-individual heterogeneity attributable to personality profiles, demographic variables, and comorbid conditions.
+  </p>
+  <p>
+    To address these limitations, we introduce <strong>MPDD-AVG</strong>, a comprehensive benchmark that uniquely integrates two activities of semi-structured interview behavioral data and gait monitoring from wearable sensors. The challenge is an updated version of <strong>MPDD2025 @ ACM MM 2025</strong>, which comprises two age-specific datasets: MPDD-Young (110 young adults) investigating academic stress and social functioning, and MPDD-Elderly (110 older adults) examining late-life depression influenced by chronic conditions and living arrangements.
+  </p>
+  <p>
+    Critically, we provide raw individual difference annotations including Big Five-10 personality dimensions, demographic variables, and health conditions — rather than pre-engineered features only — explicitly encouraging participants to develop innovative personality-conditioned modeling strategies.
+  </p>
+
+  <div class="stats-bar">
+    <div class="stat-item">
+      <span class="stat-num">220</span>
+      <span class="stat-lbl">Participants</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">2</span>
+      <span class="stat-lbl">Datasets</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">6</span>
+      <span class="stat-lbl">Sub-tracks</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">3</span>
+      <span class="stat-lbl">Modalities</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">Big5</span>
+      <span class="stat-lbl">Personality</span>
     </div>
   </div>
-</section>
 
-<!-- TRACKS -->
-<section id="tracks">
-  <div class="container">
-    <div class="section-label">Tracks</div>
-    <h2 class="section-title">Track Setting & Evaluation</h2>
-    <p class="section-lead">Two age-specific datasets, each featuring three complementary sub-tracks exploring different combinations of behavioral modalities and personality modeling.</p>
-    <div class="tracks-tabs">
-      <button class="tab-btn active" onclick="switchTab(event,'young')">Track 1 — MPDD-Young</button>
-      <button class="tab-btn" onclick="switchTab(event,'elderly')">Track 2 — MPDD-Elderly</button>
+  <h2>What Makes This Challenge Unique?</h2>
+
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon">🎙️</div>
+      <h3>Audio-Visual Interview</h3>
+      <p>Semi-structured interviews capturing cognitive-linguistic and affective-paralinguistic behavioral cues from both young adults and elderly participants.</p>
     </div>
-    <div id="young" class="tab-content active">
-      <div class="dataset-grid">
-        <div class="ds-card">
-          <div class="ds-card-head"><div class="ds-dot" style="background:var(--acm-red);"></div><h3>MPDD-Young Dataset</h3></div>
-          <p>Focuses on 110 college students, investigating how academic stress, social environment, and personality traits contribute to depression in young adults.</p>
-          <p>Audiovisual recordings from semi-structured interviews, gait data from wearable IMU sensors, Big Five-10 personality labels, and demographic information.</p>
-          <div class="tag-list">
-            <span class="tag">110 Young Adults</span>
-            <span class="tag red">PHQ-9 Scores</span>
-            <span class="tag red">Big Five-10</span>
-            <span class="tag">IMU Gait</span>
-            <span class="tag">Demographics</span>
-          </div>
-        </div>
-        <div class="ds-card">
-          <div class="ds-card-head"><div class="ds-dot" style="background:#888;"></div><h3>Classification Tasks</h3></div>
-          <p><strong style="color:var(--acm-dark)">Binary:</strong> Normal / Depressed</p>
-          <p><strong style="color:var(--acm-dark)">Ternary:</strong> Normal / Mildly Depressed / Severely Depressed</p>
-          <p style="font-size:0.78rem; color:var(--acm-muted); margin-top:0.75rem; border-top:1px solid var(--border); padding-top:0.75rem;">80% training + validation &nbsp;·&nbsp; 20% testing &nbsp;·&nbsp; Standardized splits provided</p>
-        </div>
-      </div>
-      <div class="subtracks">
-        <div class="st-card">
-          <div class="st-label">Sub-track 1</div>
-          <div class="st-name">A-V+P</div>
-          <div class="st-desc">Audio-Visual with Personality Modeling. Interview acoustic and visual features conditioned on Big Five-10 personality traits.</div>
-        </div>
-        <div class="st-card">
-          <div class="st-label">Sub-track 2</div>
-          <div class="st-name">A-V-G+P</div>
-          <div class="st-desc">Audio-Visual-Gait with Personality. Full multimodal fusion of conversational cues, ambulatory patterns, and personality information.</div>
-        </div>
-        <div class="st-card">
-          <div class="st-label">Sub-track 3</div>
-          <div class="st-name">G+P</div>
-          <div class="st-desc">Gait with Personality Factors. Psychomotor depression detection from IMU signals conditioned on personality traits.</div>
-        </div>
-      </div>
+    <div class="card">
+      <div class="card-icon">🚶</div>
+      <h3>Gait Analysis via IMU</h3>
+      <p>Wearable IMU sensors capturing walking speed, stride regularity, and postural dynamics as psychomotor indicators of depression.</p>
     </div>
-    <div id="elderly" class="tab-content">
-      <div class="dataset-grid">
-        <div class="ds-card">
-          <div class="ds-card-head"><div class="ds-dot" style="background:var(--acm-red);"></div><h3>MPDD-Elderly Dataset</h3></div>
-          <p>Examines depression in 110 older adults, exploring how chronic illnesses, living conditions, and personality traits influence late-life depression manifestation.</p>
-          <p>Audiovisual interviews, gait monitoring, Big Five-10 personality labels, health condition annotations (endocrine, circulatory, nervous system), and detailed demographic information.</p>
-          <div class="tag-list">
-            <span class="tag">110 Older Adults</span>
-            <span class="tag red">PHQ-9 Scores</span>
-            <span class="tag red">Big Five-10</span>
-            <span class="tag">Disease Labels</span>
-            <span class="tag">IMU Gait</span>
-          </div>
-        </div>
-        <div class="ds-card">
-          <div class="ds-card-head"><div class="ds-dot" style="background:#888;"></div><h3>Classification Tasks</h3></div>
-          <p><strong style="color:var(--acm-dark)">Binary:</strong> Normal / Depressed</p>
-          <p><strong style="color:var(--acm-dark)">Ternary:</strong> Normal / Mildly Depressed / Severely Depressed</p>
-          <p><strong style="color:var(--acm-dark)">Quinary:</strong> Normal / Mild / Moderate / Moderately Severe / Severe</p>
-          <p style="font-size:0.78rem; color:var(--acm-muted); margin-top:0.75rem; border-top:1px solid var(--border); padding-top:0.75rem;">Includes chronic disease annotations: endocrine · circulatory · nervous system</p>
-        </div>
-      </div>
-      <div class="subtracks">
-        <div class="st-card">
-          <div class="st-label">Sub-track 1</div>
-          <div class="st-name">A-V+P</div>
-          <div class="st-desc">Audio-Visual with Personality Modeling. Interview features with personality-conditioned late-life depression assessment.</div>
-        </div>
-        <div class="st-card">
-          <div class="st-label">Sub-track 2</div>
-          <div class="st-name">A-V-G+P</div>
-          <div class="st-desc">Audio-Visual-Gait with Personality. Holistic elderly depression detection spanning cognitive, affective, and psychomotor domains.</div>
-        </div>
-        <div class="st-card">
-          <div class="st-label">Sub-track 3</div>
-          <div class="st-name">G+P</div>
-          <div class="st-desc">Gait with Personality Factors. Ambulatory pattern analysis for elderly depression with chronic condition awareness.</div>
-        </div>
-      </div>
+    <div class="card">
+      <div class="card-icon">🧠</div>
+      <h3>Personality-Aware Modeling</h3>
+      <p>Raw Big Five-10 personality annotations with demographic and health condition data to model inter-individual heterogeneity in depressive symptomatology.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">👥</div>
+      <h3>Age-Diverse Population</h3>
+      <p>110 young adults (academic stress, social functioning) and 110 elderly participants (late-life depression, chronic conditions, living arrangements).</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📊</div>
+      <h3>Comprehensive Annotation</h3>
+      <p>PHQ-9 depression scores, Big Five-10 personality traits, demographics, disease labels — the most complete annotation scheme to date.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔬</div>
+      <h3>Standardized Evaluation</h3>
+      <p>Both classification (binary/ternary/quinary) and regression tasks with composite metrics covering Macro-F1, CCC, and Cohen's Kappa.</p>
     </div>
   </div>
-</section>
 
-<!-- DATASET COMPARISON -->
-<section id="dataset">
-  <div class="container">
-    <div class="section-label">Dataset</div>
-    <h2 class="section-title">Dataset Overview</h2>
-    <p class="section-lead">MPDD-AVG significantly enhances both the breadth of behavioral modalities and the depth of individual difference annotations compared to existing datasets.</p>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Dataset</th><th>Audio-Visual</th><th>Gait</th><th>Depression</th>
-            <th>Personality</th><th>Gender</th><th>Age</th><th>Region</th><th>Disease</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>AVEC</td><td class="check">✓</td><td class="cross">—</td><td class="check">✓</td><td class="cross">—</td><td class="check">✓</td><td class="check">✓</td><td class="cross">—</td><td class="cross">—</td></tr>
-          <tr><td>DAIC-WoZ</td><td class="check">✓</td><td class="cross">—</td><td class="check">✓</td><td class="cross">—</td><td class="check">✓</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td></tr>
-          <tr><td>Pittsburgh</td><td class="check">✓</td><td class="cross">—</td><td class="check">✓</td><td class="cross">—</td><td class="check">✓</td><td class="check">✓</td><td class="cross">—</td><td class="cross">—</td></tr>
-          <tr><td>D-Vlog</td><td class="check">✓</td><td class="cross">—</td><td class="check">✓</td><td class="cross">—</td><td class="check">✓</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td></tr>
-          <tr><td>MMDA</td><td class="check">✓</td><td class="cross">—</td><td class="check">✓</td><td class="cross">—</td><td class="check">✓</td><td class="check">✓</td><td class="cross">—</td><td class="cross">—</td></tr>
-          <tr><td>EATD-Corpus</td><td class="check">✓</td><td class="cross">—</td><td class="check">✓</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td></tr>
-          <tr><td>CMDC</td><td class="check">✓</td><td class="cross">—</td><td class="check">✓</td><td class="cross">—</td><td class="check">✓</td><td class="check">✓</td><td class="cross">—</td><td class="cross">—</td></tr>
-          <tr><td>MODMA</td><td class="check">✓</td><td class="cross">—</td><td class="check">✓</td><td class="cross">—</td><td class="check">✓</td><td class="check">✓</td><td class="cross">—</td><td class="cross">—</td></tr>
-          <tr class="ours">
-            <td>MPDD-AVG (Ours)</td>
-            <td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td>
-            <td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <div class="cite">
+    <strong>Please cite:</strong> Fu, C., Fu, Z., Zhang, Q., Kuang, X., Dong, J., Su, K., ... &amp; Ishiguro, H. (2025, October). The First MPDD Challenge: Multimodal Personality-aware Depression Detection. In <em>Proceedings of the 33rd ACM International Conference on Multimedia</em> (pp. 13924–13929).
   </div>
-</section>
 
-<!-- METRICS -->
-<section id="metrics">
-  <div class="container">
-    <div class="section-label">Evaluation</div>
-    <h2 class="section-title">Evaluation Metrics</h2>
-    <p class="section-lead">Comprehensive metrics assessing model performance across classification and regression tasks, accounting for class imbalance and clinical relevance.</p>
-    <div class="metrics-grid">
-      <div class="metric-group">
-        <h3>Classification Metrics</h3>
-        <div class="metric-item"><span class="metric-name">Accuracy</span><span class="metric-abbr">ACC</span></div>
-        <div class="metric-item"><span class="metric-name">Macro F1-Score</span><span class="metric-abbr">Macro-F1</span></div>
-        <div class="metric-item"><span class="metric-name">Cohen's Kappa</span><span class="metric-abbr">κ</span></div>
-      </div>
-      <div class="metric-group">
-        <h3>Regression Metrics</h3>
-        <div class="metric-item"><span class="metric-name">Root Mean Squared Error</span><span class="metric-abbr">RMSE</span></div>
-        <div class="metric-item"><span class="metric-name">Mean Absolute Error</span><span class="metric-abbr">MAE</span></div>
-        <div class="metric-item"><span class="metric-name">Concordance Correlation Coefficient</span><span class="metric-abbr">CCC</span></div>
-      </div>
-    </div>
-    <div class="formula-box">
-      <div class="formula-label">Track-Level Composite Score</div>
-      <div class="formula">Score<sub>track</sub> = α · Macro-F1 + β · CCC + γ · κ</div>
-      <div class="formula-note">where α + β + γ = 1, balancing severity classification, continuous PHQ-9 prediction, and diagnostic consistency.</div>
-    </div>
+  <div class="contact-bar">
+    GET IN TOUCH: <a href="mailto:sstcneu@163.com">sstcneu@163.com</a> | <a href="mailto:fuchangzeng@qhd.neu.edu.cn">fuchangzeng@qhd.neu.edu.cn</a>
   </div>
-</section>
 
-<!-- TIMELINE -->
-<section id="timeline">
-  <div class="container">
-    <div class="section-label">Schedule</div>
-    <h2 class="section-title">Important Dates</h2>
-    <p class="section-lead">All deadlines are in AoE (Anywhere on Earth) time.</p>
-    <div class="tl-grid">
-      <div class="tl-item left">
-        <div class="tl-dot-center"></div>
-        <div class="tl-date">March 20, 2026</div>
-        <div class="tl-title">🚀 Website Launch &amp; Registration Opens</div>
-        <div class="tl-desc">Challenge website goes live. Call for participation announced. Registration opens for all teams worldwide.</div>
-      </div>
-      <div class="tl-item right">
-        <div class="tl-dot-center"></div>
-        <div class="tl-date">~April 10, 2026</div>
-        <div class="tl-title">📦 Dataset, Baseline &amp; Tech Report Released</div>
-        <div class="tl-desc">Training and validation data released (signed EULA required). Baseline code and system paper published on GitHub.</div>
-      </div>
-      <div class="tl-item left">
-        <div class="tl-dot-center"></div>
-        <div class="tl-date">May 1, 2026</div>
-        <div class="tl-title">🧪 Test Set Released &amp; CodaLab Opens</div>
-        <div class="tl-desc">Testing partition released. CodaLab leaderboard opens for result submission (max 5 attempts / sub-track / day).</div>
-      </div>
-      <div class="tl-item right">
-        <div class="tl-dot-center"></div>
-        <div class="tl-date">June 20, 2026</div>
-        <div class="tl-title">⏰ Submission Deadline</div>
-        <div class="tl-desc">Final deadline for submitting model predictions on the test set via CodaLab.</div>
-      </div>
-      <div class="tl-item left">
-        <div class="tl-dot-center"></div>
-        <div class="tl-date">July 1, 2026</div>
-        <div class="tl-title">🏆 Rankings Announced &amp; OpenReview Opens</div>
-        <div class="tl-desc">Final rankings published. OpenReview venue opens for system description paper submissions.</div>
-      </div>
-      <div class="tl-item right">
-        <div class="tl-dot-center"></div>
-        <div class="tl-date">July 10, 2026</div>
-        <div class="tl-title">📄 Paper Submission Deadline</div>
-        <div class="tl-desc">Deadline for submitting system papers via OpenReview. Must include methodology, results, and reproducible code.</div>
-      </div>
-      <div class="tl-item left">
-        <div class="tl-dot-center"></div>
-        <div class="tl-date">TBD</div>
-        <div class="tl-title">✅ Acceptance &amp; Camera-Ready</div>
-        <div class="tl-desc">Acceptance notifications and camera-ready submission deadline to be announced.</div>
-      </div>
-      <div class="tl-item right">
-        <div class="tl-dot-center"></div>
-        <div class="tl-date">October 2026</div>
-        <div class="tl-title">🎉 ACM MM 2026 — Results Presentation</div>
-        <div class="tl-desc">Challenge results presented at ACM MM 2026. Winners announced and top systems presented.</div>
-      </div>
-    </div>
-  </div>
-</section>
+</div>
 
-<!-- REGISTRATION -->
-<section id="registration">
-  <div class="container">
-    <div class="section-label">Registration</div>
-    <h2 class="section-title">How to Participate</h2>
-    <p class="section-lead">The challenge is open to any researcher from any organization worldwide. Complete all steps below to gain access to the dataset and leaderboard.</p>
-
-    <!-- 4-step flow -->
-    <div class="reg-steps" style="grid-template-columns: repeat(4,1fr); margin-bottom:2rem;">
-      <div class="step-card">
-        <div class="step-num">01</div>
-        <h3>Download &amp; Sign EULA</h3>
-        <p>Download the MPDD-AVG Dataset License Agreement. Read thoroughly and sign by hand. Must be signed by a full-time faculty member or researcher.</p>
-        <p style="margin-top:0.75rem;"><a href="https://github.com/hacilab/MPDD/blob/main/MPDD%20Dataset%20License%20Agreementt.pdf" target="_blank">📄 Download Agreement PDF →</a></p>
-      </div>
-      <div class="step-card">
-        <div class="step-num">02</div>
-        <h3>Complete Online Form</h3>
-        <p>Fill in the online registration form below with your team information, institution, and track selection. The form also lets you upload your signed EULA.</p>
-        <p style="margin-top:0.75rem;"><a href="#reg-form">📝 Go to Form ↓</a></p>
-      </div>
-      <div class="step-card">
-        <div class="step-num">03</div>
-        <h3>Email Signed Agreement</h3>
-        <p>Send your signed EULA to the organizers. Include your team name — this will be your CodaLab group name for the leaderboard.</p>
-        <p style="margin-top:0.75rem;">📧 <a href="mailto:sstcneu@163.com">sstcneu@163.com</a><br>CC: <a href="mailto:fuchangzeng@qhd.neu.edu.cn">fuchangzeng@qhd.neu.edu.cn</a></p>
-      </div>
-      <div class="step-card">
-        <div class="step-num">04</div>
-        <h3>Access Data &amp; Submit</h3>
-        <p>Receive dataset credentials. Register on CodaLab using your team name. Submit predictions (max 5 attempts / sub-track / day).</p>
-        <p style="margin-top:0.75rem; color:var(--acm-muted); font-size:0.77rem;">CodaLab links available after May 1, 2026.</p>
-      </div>
-    </div>
-
-    <!-- Google Form embed -->
-    <div id="reg-form" style="margin-bottom:2rem;">
-      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
-        <div>
-          <div style="font-size:0.72rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--acm-red); margin-bottom:0.2rem;">Step 2 — Online Registration Form</div>
-          <div style="font-size:0.82rem; color:var(--acm-muted);">Please complete all fields. You will receive a confirmation email after submission.</div>
-        </div>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLScAeOCfQNuBMrKLfgNorW7XwJBB463MdKEQ1Y8M7aUmyG4a7Q/viewform?usp=sf_link" target="_blank" class="btn btn-outline" style="font-size:0.78rem; padding:0.5rem 1rem; white-space:nowrap;">Open in New Tab ↗</a>
-      </div>
-      <div style="border:1px solid var(--border); border-top:3px solid var(--acm-red); overflow:hidden; background:var(--white);">
-        <iframe
-          src="https://docs.google.com/forms/d/e/1FAIpQLScAeOCfQNuBMrKLfgNorW7XwJBB463MdKEQ1Y8M7aUmyG4a7Q/viewform?embedded=true"
-          width="100%"
-          height="1100"
-          frameborder="0"
-          marginheight="0"
-          marginwidth="0"
-          style="display:block;"
-          loading="lazy"
-        >Loading registration form…</iframe>
-      </div>
-    </div>
-
-    <!-- CTA bar -->
-    <div class="reg-cta">
-      <div>
-        <h3>Need the EULA?</h3>
-        <p>Applications not following the EULA signing process may be ignored. Open to all researchers worldwide — no geographic restrictions.</p>
-      </div>
-      <a href="https://github.com/hacilab/MPDD/blob/main/MPDD%20Dataset%20License%20Agreementt.pdf" target="_blank" class="btn-white">Download EULA →</a>
-    </div>
-
-    <!-- Rules -->
-    <div style="margin-top:0.1rem;">
-      <div style="font-size:0.72rem; font-weight:700; letter-spacing:0.1em; color:var(--acm-muted); text-transform:uppercase; padding:0.8rem 0 0.5rem; border-top:1px solid var(--border);">Challenge Rules</div>
-      <div class="rules-grid">
-        <div class="rule-item"><span>✓ Allowed:</span> Pre-trained open-source model weights</div>
-        <div class="rule-item"><span>✗ Prohibited:</span> Private / in-house datasets for pre-training</div>
-        <div class="rule-item"><span>✓ Limit:</span> Max 5 submissions per sub-track per day</div>
-        <div class="rule-item"><span>✓ Required:</span> Full reproducibility (code + checkpoints)</div>
-        <div class="rule-item"><span>✓ Evaluation:</span> Accuracy, Macro-F1, CCC, Cohen's Kappa</div>
-        <div class="rule-item"><span>✓ Eligibility:</span> Open to all researchers worldwide</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- BASELINE -->
-<section id="baseline">
-  <div class="container">
-    <div class="section-label">Resources</div>
-    <h2 class="section-title">Baseline System &amp; Materials</h2>
-    <p class="section-lead">We provide comprehensive materials including baseline code for all sub-tracks, standardized feature sets, and dataset access to all registered participants.</p>
-    <div class="baseline-grid">
-      <div class="baseline-card">
-        <h3>📦 Dataset Access</h3>
-        <p>Available to registered participants who have submitted a signed EULA. Includes audio/video, IMU gait data, and all annotations.</p>
-        <div class="link-item"><span class="lk">Feature Set:</span><span class="tbd">TBD — Available ~April 10, 2026</span></div>
-        <div class="link-item"><span class="lk">Raw Data:</span><span class="tbd">TBD — Pending ethical review</span></div>
-      </div>
-      <div class="baseline-card">
-        <h3>💻 Baseline Code</h3>
-        <p>Implementations for all 6 sub-tracks (A-V+P, A-V-G+P, G+P for both Young and Elderly) available on GitHub.</p>
-        <div class="link-item"><span class="lk">GitHub:</span><a href="https://github.com/hacilab/" target="_blank">github.com/hacilab ↗</a></div>
-        <div class="link-item"><span class="lk">Baseline Paper:</span><span class="tbd">TBD — Available ~April 10, 2026</span></div>
-      </div>
-      <div class="baseline-card">
-        <h3>🏆 CodaLab Leaderboard</h3>
-        <p>Submit predictions via CodaLab. Rankings based on composite score: α·Macro-F1 + β·CCC + γ·κ.</p>
-        <div class="link-item"><span class="lk">MPDD-Young:</span><span class="tbd">TBD — Opens May 1, 2026</span></div>
-        <div class="link-item"><span class="lk">MPDD-Elderly:</span><span class="tbd">TBD — Opens May 1, 2026</span></div>
-      </div>
-      <div class="baseline-card">
-        <h3>📝 Paper Submission</h3>
-        <p>Each team must submit a system description paper via OpenReview including methodology, results, and reproducible code.</p>
-        <div class="link-item"><span class="lk">OpenReview:</span><span class="tbd">TBD — Opens July 1, 2026</span></div>
-        <div class="link-item"><span class="lk">Contact:</span><a href="mailto:sstcneu@163.com">sstcneu@163.com</a></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ORGANIZERS -->
-<!-- Order from paper: Changzeng Fu¹·², Yiming Zhang¹, Ming Shang¹, Shiqi Zhao¹,
-     Wenbo Shi¹, Alexis Meneses³, Zhaojie Luo⁴, Chaoran Liu⁵,
-     Yuichiro Yoshikawa², Hiroshi Ishiguro², Björn Schuller⁶ -->
-<section id="organizers">
-  <div class="container">
-    <div class="section-label">Organisation</div>
-    <h2 class="section-title">Organizing Team</h2>
-    <p class="section-lead">The organizing team comprises leading research groups from 6 universities spanning affective computing, human behavior analysis, multimodal machine learning, and human-robot interaction.</p>
-
-    <div class="org-section-label">Organizers</div>
-    <div class="org-grid">
-      <div class="org-card">
-        <div class="org-avatar"><img src="https://hacilab.github.io/img/ChangzengFu.png" alt="Changzeng Fu" onerror="this.style.display='none'">CF</div>
-        <div class="org-name">Changzeng Fu</div>
-        <div class="org-aff">Northeastern Univ. / Osaka Univ.</div>
-      </div>
-      <div class="org-card">
-        <div class="org-avatar"><img src="https://hacilab.github.io/img/ShiqiZhao.png" alt="Shiqi Zhao" onerror="this.style.display='none'">SZ</div>
-        <div class="org-name">Shiqi Zhao</div>
-        <div class="org-aff">Northeastern University, China</div>
-      </div>
-      <div class="org-card">
-        <div class="org-avatar"><img src="https://hacilab.github.io/img/WenboShi.png" alt="Wenbo Shi" onerror="this.style.display='none'">WS</div>
-        <div class="org-name">Wenbo Shi</div>
-        <div class="org-aff">Northeastern University, China</div>
-      </div>
-      <div class="org-card">
-        <div class="org-avatar">AM</div>
-        <div class="org-name">Alexis Meneses</div>
-        <div class="org-aff">PUCP, Peru</div>
-      </div>
-      <div class="org-card">
-        <div class="org-avatar"><img src="https://hacilab.github.io/img/ZhaojieLuo.jpg" alt="Zhaojie Luo" onerror="this.style.display='none'">ZL</div>
-        <div class="org-name">Zhaojie Luo</div>
-        <div class="org-aff">Southeastern University, China</div>
-      </div>
-      <div class="org-card">
-        <div class="org-avatar"><img src="https://hacilab.github.io/img/ChaoranLiu.png" alt="Chaoran Liu" onerror="this.style.display='none'">CL</div>
-        <div class="org-name">Chaoran Liu</div>
-        <div class="org-aff">National Info. Institute, Japan</div>
-      </div>
-      <div class="org-card">
-        <div class="org-avatar"><img src="https://hacilab.github.io/img/YuichiroYoshikawa.png" alt="Yuichiro Yoshikawa" onerror="this.style.display='none'">YY</div>
-        <div class="org-name">Yuichiro Yoshikawa</div>
-        <div class="org-aff">Osaka University, Japan</div>
-      </div>
-      <div class="org-card">
-        <div class="org-avatar"><img src="https://hacilab.github.io/img/HiroshiIshiguro.png" alt="Hiroshi Ishiguro" onerror="this.style.display='none'">HI</div>
-        <div class="org-name">Hiroshi Ishiguro</div>
-        <div class="org-aff">Osaka University, Japan</div>
-      </div>
-      <div class="org-card">
-        <div class="org-avatar"><img src="https://hacilab.github.io/img/Schuller.jpeg" alt="Björn Schuller" onerror="this.style.display='none'">BS</div>
-        <div class="org-name">Björn Schuller</div>
-        <div class="org-aff">TU Munich / Imperial College London</div>
-      </div>
-    </div>
-
-    <div class="org-section-label">Contributors</div>
-    <div class="org-grid">
-      <div class="org-card">
-        <div class="org-avatar">YZ</div>
-        <div class="org-name">Yiming Zhang</div>
-        <div class="org-aff">Northeastern University, China</div>
-      </div>
-      <div class="org-card">
-        <div class="org-avatar">MS</div>
-        <div class="org-name">Ming Shang</div>
-        <div class="org-aff">Northeastern University, China</div>
-      </div>
-    </div>
-
-    <div style="margin-top:2.5rem; background:var(--white); border:1px solid var(--border); border-top:3px solid var(--acm-red); padding:1.6rem 2rem; display:flex; align-items:center; justify-content:space-between; gap:1.5rem; flex-wrap:wrap;">
-      <div>
-        <div style="font-size:0.72rem; font-weight:700; letter-spacing:0.1em; color:var(--acm-muted); text-transform:uppercase; margin-bottom:0.4rem;">Get in Touch</div>
-        <div style="font-size:0.88rem; color:var(--acm-dark);">
-          <a href="mailto:sstcneu@163.com" style="color:var(--acm-red); text-decoration:none; font-weight:600;">sstcneu@163.com</a>
-          &nbsp;·&nbsp;
-          <a href="mailto:fuchangzeng@qhd.neu.edu.cn" style="color:var(--acm-red); text-decoration:none; font-weight:600;">fuchangzeng@qhd.neu.edu.cn</a>
-        </div>
-      </div>
-      <div style="font-size:0.76rem; color:var(--acm-muted); max-width:420px; text-align:right;">
-        The challenge is committed to providing a safe, respectful, and harassment-free environment for everyone regardless of background or identity.
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
 <footer>
-  <div class="footer-top">
-    <a href="#home">Home</a>
-    <a href="#tracks">Tracks</a>
-    <a href="#timeline">Dates</a>
-    <a href="#registration">Registration</a>
-    <a href="https://github.com/hacilab/" target="_blank">GitHub</a>
-    <a href="https://hacilab.github.io/MPDDChallenge.github.io/" target="_blank">MPDD 2025</a>
-    <a href="https://www.acmmm2026.org/" target="_blank">ACM MM 2026</a>
-  </div>
-  <div class="footer-sep"></div>
-  <div class="footer-copy">
-    © 2026 <span class="footer-red">MPDD-AVG</span> Challenge Organizing Committee &nbsp;·&nbsp;
-    Grand Challenge @ ACM International Conference on Multimedia 2026
-  </div>
+  <p>© 2026 <span class="red">MPDD-AVG</span> Challenge Organizing Committee &nbsp;·&nbsp; Grand Challenge @ ACM International Conference on Multimedia 2026</p>
 </footer>
 
-<script>
-  function switchTab(e, id) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-    e.target.classList.add('active');
-    document.getElementById(id).classList.add('active');
-  }
-</script>
 </body>
 </html>

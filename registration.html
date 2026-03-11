@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registration — MPDD-AVG 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;600;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="site-title" href="index.html">MPDD-AVG 2026</a>
+    <button class="hamburger" onclick="document.querySelector('nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li>
+          <a href="challenge.html">Challenge ▾</a>
+          <ul>
+            <li><a href="challenge.html#overview">Overview</a></li>
+            <li><a href="challenge.html#dataset">Dataset</a></li>
+            <li><a href="challenge.html#tracks">Tracks &amp; Sub-tracks</a></li>
+            <li><a href="challenge.html#metrics">Evaluation Metrics</a></li>
+            <li><a href="challenge.html#baseline">Baseline &amp; Resources</a></li>
+          </ul>
+        </li>
+        <li><a href="registration.html" class="active">Registration</a></li>
+        <li><a href="dates.html">Important Dates</a></li>
+        <li><a href="organisers.html">Organisation</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+
+  <h2>Registration</h2>
+
+  <p>The MPDD-AVG Challenge is open to any researcher from any organization worldwide. To participate, please complete both steps below.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Download and sign the End-User License Agreement (EULA)</h3>
+        <p>
+          Download the <a href="https://github.com/hacilab/MPDD/blob/main/MPDD%20Dataset%20License%20Agreementt.pdf" target="_blank"><strong>MPDD-AVG Dataset License Agreement (PDF)</strong></a> and sign it at your end. The agreement must be signed by a <strong>full-time faculty member or researcher</strong>.
+        </p>
+        <p>
+          Please email the signed EULA to <a href="mailto:sstcneu@163.com">sstcneu@163.com</a> (CC: <a href="mailto:fuchangzeng@qhd.neu.edu.cn">fuchangzeng@qhd.neu.edu.cn</a>). Include your team name in the email — this name will be used as your CodaLab group name for the leaderboard.
+        </p>
+        <p style="font-size:0.83rem; color:#888;">Applications not following the EULA signing process may be ignored.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Complete the online registration form</h3>
+        <p>Fill in the registration form below with your team information, institution details, and track selection. You will receive a confirmation email after submission.</p>
+        <p><a href="https://docs.google.com/forms/d/e/1FAIpQLScAeOCfQNuBMrKLfgNorW7XwJBB463MdKEQ1Y8M7aUmyG4a7Q/viewform?usp=sf_link" target="_blank">→ Open form in new tab</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-wrap">
+    <div class="form-header">
+      <span>Step 2 — Online Registration Form</span>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLScAeOCfQNuBMrKLfgNorW7XwJBB463MdKEQ1Y8M7aUmyG4a7Q/viewform?usp=sf_link" target="_blank">Open in new tab ↗</a>
+    </div>
+    <iframe
+      src="https://docs.google.com/forms/d/e/1FAIpQLScAeOCfQNuBMrKLfgNorW7XwJBB463MdKEQ1Y8M7aUmyG4a7Q/viewform?embedded=true"
+      width="100%"
+      height="1100"
+      frameborder="0"
+      marginheight="0"
+      marginwidth="0"
+      loading="lazy"
+      style="display:block;"
+    >Loading registration form…</iframe>
+  </div>
+
+  <h2>Challenge Rules</h2>
+
+  <div class="rules">
+    <div class="rule"><strong>✓ Allowed:</strong> Pre-trained weights from open-source datasets or models</div>
+    <div class="rule"><strong>✗ Prohibited:</strong> Private or in-house datasets for pre-training</div>
+    <div class="rule"><strong>✓ Limit:</strong> Maximum 5 submission attempts per sub-track per day</div>
+    <div class="rule"><strong>✓ Required:</strong> Full reproducibility — code, models, and checkpoints</div>
+    <div class="rule"><strong>✓ Evaluation:</strong> Accuracy, Macro-F1, CCC, Cohen's Kappa</div>
+    <div class="rule"><strong>✓ Eligibility:</strong> Open to all researchers worldwide</div>
+  </div>
+
+  <div class="contact-bar">
+    GET IN TOUCH: <a href="mailto:sstcneu@163.com">sstcneu@163.com</a> | <a href="mailto:fuchangzeng@qhd.neu.edu.cn">fuchangzeng@qhd.neu.edu.cn</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 <span class="red">MPDD-AVG</span> Challenge Organizing Committee &nbsp;·&nbsp; Grand Challenge @ ACM International Conference on Multimedia 2026</p>
+</footer>
+
+</body>
+</html>

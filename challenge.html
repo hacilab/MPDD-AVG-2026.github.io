@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Challenge — MPDD-AVG 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;600;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="site-title" href="index.html">MPDD-AVG 2026</a>
+    <button class="hamburger" onclick="document.querySelector('nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li>
+          <a href="challenge.html" class="active">Challenge ▾</a>
+          <ul>
+            <li><a href="challenge.html#overview">Overview</a></li>
+            <li><a href="challenge.html#dataset">Dataset</a></li>
+            <li><a href="challenge.html#tracks">Tracks &amp; Sub-tracks</a></li>
+            <li><a href="challenge.html#metrics">Evaluation Metrics</a></li>
+            <li><a href="challenge.html#baseline">Baseline &amp; Resources</a></li>
+          </ul>
+        </li>
+        <li><a href="registration.html">Registration</a></li>
+        <li><a href="dates.html">Important Dates</a></li>
+        <li><a href="organisers.html">Organisation</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+
+  <h2 id="overview">Overview</h2>
+  <p>
+    The MPDD-AVG Challenge 2026 comprises two age-specific datasets — <strong>MPDD-Young</strong> and <strong>MPDD-Elderly</strong> — each featuring three complementary sub-tracks that explore different combinations of behavioral modalities and personality modeling. The challenge uniquely integrates semi-structured interview behavioral data with continuous gait monitoring from wearable sensors, enabling holistic assessment spanning cognitive-linguistic, affective-paralinguistic, and psychomotor domains.
+  </p>
+  <p>
+    This challenge is an updated version of <a href="https://hacilab.github.io/MPDDChallenge.github.io/" target="_blank">MPDD2025 @ ACM MM 2025</a>. Compared to the previous edition, MPDD-AVG introduces a new gait modality (IMU-based ambulatory monitoring), the <code>G+P</code> and <code>A-V-G+P</code> sub-tracks, and an extended annotation scheme including health condition labels.
+  </p>
+
+  <h2 id="dataset">Dataset</h2>
+
+  <h3>MPDD-Young</h3>
+  <p>
+    The MPDD-Young dataset comprises data from <strong>110 college students</strong>, investigating how academic stress, social environment, and personality traits contribute to depression in young adults. Participants underwent semi-structured interviews designed to assess academic stress, social functioning, and emotional well-being. Subsequently, participants walked naturally within a designated area while equipped with wearable IMU sensors.
+  </p>
+  <p><strong>Annotations:</strong> PHQ-9 Scale Scores · Big Five-10 personality traits · Demographics (gender, age, birth region)</p>
+  <p><strong>Classification tasks:</strong> Binary (normal / depressed) &nbsp;·&nbsp; Ternary (normal / mild / severe)</p>
+
+  <h3>MPDD-Elderly</h3>
+  <p>
+    The MPDD-Elderly dataset comprises data from <strong>110 older adults</strong>, examining how chronic illnesses, living conditions, and personality traits influence late-life depression manifestation. Participants engaged in semi-structured interviews and then walked freely within a designated area while wearing IMU sensors.
+  </p>
+  <p><strong>Annotations:</strong> PHQ-9 Scale Scores · Big Five-10 personality traits · Demographics (age, gender, family situation, economic status) · Disease labels (endocrine, circulatory, nervous system)</p>
+  <p><strong>Classification tasks:</strong> Binary · Ternary · Quinary (normal / mild / moderate / moderately severe / severe)</p>
+
+  <h3>Dataset Comparison</h3>
+  <p>As compared to existing datasets, MPDD-AVG significantly enhances both the breadth of behavioral modalities and the depth of individual difference annotations:</p>
+
+  <div class="overflow-x">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Dataset</th>
+          <th>Audio-Visual</th>
+          <th>Gait</th>
+          <th>Depression</th>
+          <th>Personality</th>
+          <th>Gender</th>
+          <th>Age</th>
+          <th>Region</th>
+          <th>Disease</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>AVEC</td><td class="ck">✓</td><td class="cx">—</td><td class="ck">✓</td><td class="cx">—</td><td class="ck">✓</td><td class="ck">✓</td><td class="cx">—</td><td class="cx">—</td></tr>
+        <tr><td>DAIC-WoZ</td><td class="ck">✓</td><td class="cx">—</td><td class="ck">✓</td><td class="cx">—</td><td class="ck">✓</td><td class="cx">—</td><td class="cx">—</td><td class="cx">—</td></tr>
+        <tr><td>Pittsburgh</td><td class="ck">✓</td><td class="cx">—</td><td class="ck">✓</td><td class="cx">—</td><td class="ck">✓</td><td class="ck">✓</td><td class="cx">—</td><td class="cx">—</td></tr>
+        <tr><td>D-Vlog</td><td class="ck">✓</td><td class="cx">—</td><td class="ck">✓</td><td class="cx">—</td><td class="ck">✓</td><td class="cx">—</td><td class="cx">—</td><td class="cx">—</td></tr>
+        <tr><td>MMDA</td><td class="ck">✓</td><td class="cx">—</td><td class="ck">✓</td><td class="cx">—</td><td class="ck">✓</td><td class="ck">✓</td><td class="cx">—</td><td class="cx">—</td></tr>
+        <tr><td>EATD-Corpus</td><td class="ck">✓</td><td class="cx">—</td><td class="ck">✓</td><td class="cx">—</td><td class="cx">—</td><td class="cx">—</td><td class="cx">—</td><td class="cx">—</td></tr>
+        <tr><td>CMDC</td><td class="ck">✓</td><td class="cx">—</td><td class="ck">✓</td><td class="cx">—</td><td class="ck">✓</td><td class="ck">✓</td><td class="cx">—</td><td class="cx">—</td></tr>
+        <tr><td>MODMA</td><td class="ck">✓</td><td class="cx">—</td><td class="ck">✓</td><td class="cx">—</td><td class="ck">✓</td><td class="ck">✓</td><td class="cx">—</td><td class="cx">—</td></tr>
+        <tr class="ours"><td>MPDD-AVG (Ours)</td><td class="ck">✓</td><td class="ck">✓</td><td class="ck">✓</td><td class="ck">✓</td><td class="ck">✓</td><td class="ck">✓</td><td class="ck">✓</td><td class="ck">✓</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="font-size:0.82rem; color:var(--muted);">80% of data used for training and validation; 20% for testing. Standardized splits provided.</p>
+
+  <h2 id="tracks">Tracks &amp; Sub-tracks</h2>
+  <p>Each of the two age-specific datasets (MPDD-Young and MPDD-Elderly) features three complementary sub-tracks:</p>
+
+  <div class="tracks">
+    <div class="track-box">
+      <h3>Track 1 — MPDD-Young</h3>
+      <p>Young adult depression detection focusing on 110 college students.</p>
+      <ul class="sub-list">
+        <li><span class="sub-tag">A-V+P</span> Audio-Visual with Personality Modeling</li>
+        <li><span class="sub-tag">A-V-G+P</span> Audio-Visual-Gait with Personality</li>
+        <li><span class="sub-tag">G+P</span> Gait with Personality Factors</li>
+      </ul>
+    </div>
+    <div class="track-box">
+      <h3>Track 2 — MPDD-Elderly</h3>
+      <p>Elderly depression detection focusing on 110 older adults.</p>
+      <ul class="sub-list">
+        <li><span class="sub-tag">A-V+P</span> Audio-Visual with Personality Modeling</li>
+        <li><span class="sub-tag">A-V-G+P</span> Audio-Visual-Gait with Personality</li>
+        <li><span class="sub-tag">G+P</span> Gait with Personality Factors</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Sub-track Descriptions</h3>
+  <ul>
+    <li><strong>A-V+P:</strong> Audio-Visual interview features (acoustic + visual cues) conditioned on Big Five-10 personality traits. Participants may leverage the provided personality annotations to build personality-aware depression detection models.</li>
+    <li><strong>A-V-G+P:</strong> Full multimodal fusion integrating conversational interview cues, IMU-based ambulatory gait patterns, and Big Five-10 personality information. This is the primary flagship sub-track.</li>
+    <li><strong>G+P:</strong> Gait-only detection from IMU sensor data, conditioned on personality traits. Explores psychomotor symptoms of depression through ambulatory behavior analysis.</li>
+  </ul>
+
+  <h2 id="metrics">Evaluation Metrics</h2>
+  <p>The Challenge employs comprehensive metrics to evaluate multimodal depression detection models across classification and regression tasks.</p>
+
+  <h3>Classification Metrics</h3>
+  <ul>
+    <li><strong>Accuracy (ACC)</strong> — proportion of correct predictions</li>
+    <li><strong>Macro F1-Score</strong> — F1 averaged equally across all depression severity classes, accounting for class imbalance</li>
+    <li><strong>Cohen's Kappa (κ)</strong> — inter-rater agreement accounting for chance, particularly valuable for assessing clinical diagnostic consistency</li>
+  </ul>
+
+  <h3>Regression Metrics</h3>
+  <ul>
+    <li><strong>Root Mean Squared Error (RMSE)</strong> — quantifies prediction error magnitude on continuous PHQ-9 scores</li>
+    <li><strong>Mean Absolute Error (MAE)</strong> — interpretable average prediction error</li>
+    <li><strong>Concordance Correlation Coefficient (CCC)</strong> — assesses agreement between predicted and actual PHQ-9 scores, combining precision and accuracy</li>
+  </ul>
+
+  <h3>Track-Level Score</h3>
+  <p>The final evaluation score for each track is calculated as:</p>
+  <p><code>Score<sub>track</sub> = α · Macro-F1 + β · CCC + γ · κ</code></p>
+  <p>where α + β + γ = 1, reflecting the relative importance of classification performance, continuous score prediction, and diagnostic consistency.</p>
+
+  <h2 id="baseline">Baseline &amp; Resources</h2>
+  <p>We provide the following materials to all registered participants:</p>
+  <ul>
+    <li><strong>Baseline code</strong> for all 6 sub-tracks (A-V+P, A-V-G+P, G+P for both Young and Elderly) — available on <a href="https://github.com/hacilab/" target="_blank">GitHub</a></li>
+    <li><strong>Baseline paper</strong> describing the challenge background, dataset details, baseline systems, and results — available ~April 10, 2026</li>
+    <li><strong>MPDD-AVG dataset</strong> conditioned on signed EULA agreements (feature sets now; raw data pending ethical review)</li>
+    <li><strong>Standardized audio-visual and gait feature sets</strong></li>
+    <li><strong>Raw individual difference annotations</strong> including Big Five-10 personality traits, demographics, and health conditions</li>
+  </ul>
+
+  <div class="notice">
+    <strong>Dataset access:</strong> Feature sets will be available via Google Drive after registration (~April 10, 2026). Raw data release is pending ethical review approval. A notification will be sent once approved.
+  </div>
+
+  <h3>CodaLab Leaderboard</h3>
+  <p>Results submission will be hosted on CodaLab (opens May 1, 2026). Links will be provided after that date. Each team is restricted to a maximum of <strong>5 submission attempts per sub-track per day</strong>.</p>
+  <ul>
+    <li>MPDD-Young (all sub-tracks): <em>TBD — opens May 1, 2026</em></li>
+    <li>MPDD-Elderly (all sub-tracks): <em>TBD — opens May 1, 2026</em></li>
+  </ul>
+
+  <h3>Paper Submission</h3>
+  <p>To be eligible for the final evaluation, each team must submit a system description paper via <strong>OpenReview</strong> (venue opens July 1, 2026). Papers must include thoroughly explained source code, well-trained models, and associated checkpoints. All submissions undergo peer review by the challenge technical program committee.</p>
+
+  <div class="contact-bar">
+    GET IN TOUCH: <a href="mailto:sstcneu@163.com">sstcneu@163.com</a> | <a href="mailto:fuchangzeng@qhd.neu.edu.cn">fuchangzeng@qhd.neu.edu.cn</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 <span class="red">MPDD-AVG</span> Challenge Organizing Committee &nbsp;·&nbsp; Grand Challenge @ ACM International Conference on Multimedia 2026</p>
+</footer>
+
+</body>
+</html>
