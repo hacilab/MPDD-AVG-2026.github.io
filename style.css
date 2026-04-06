@@ -1165,3 +1165,25 @@ button:focus,
   outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
+/* ── Challenge.html 二维码 ── */
+.qrcode-section {
+      margin: 2rem 0;
+      text-align: center;
+      padding: 1.5rem;
+      border-radius: 8px;
+    }
+
+.qrcode-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #222;
+    }
+.qrcode-img {
+      width: 280px;
+      height: 380px;
+      display: block;
+      margin: 0 auto;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
