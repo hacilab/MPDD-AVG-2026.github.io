@@ -332,6 +332,108 @@ nav ul li ul li a:hover {
   color: #8b1e3f;
 }
 
+.news-panel {
+  position: relative;
+  overflow: hidden;
+  margin: 0 0 3rem;
+  border: 1px solid #dbeafe;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #f8fbff 0%, #eff6ff 55%, #fff7ed 100%);
+  box-shadow: var(--shadow-medium);
+}
+
+.news-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 6px;
+  background: linear-gradient(180deg, var(--primary), #8b1e3f);
+}
+
+.news-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 1.75rem 2rem 1.25rem;
+  border-bottom: 1px solid rgba(37, 99, 235, 0.14);
+}
+
+.news-kicker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 76px;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  background: var(--dark);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.news-header h2 {
+  margin: 0 0 0.35rem;
+  color: var(--dark);
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 1.45rem;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+}
+
+.news-header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.98rem;
+}
+
+.news-list {
+  display: grid;
+  gap: 0.85rem;
+  padding: 1.25rem 2rem 2rem;
+}
+
+.news-item {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  gap: 1.25rem;
+  align-items: start;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.news-item-featured {
+  border-color: rgba(139, 30, 63, 0.25);
+  background: linear-gradient(90deg, rgba(139, 30, 63, 0.08), rgba(255, 255, 255, 0.92));
+}
+
+.news-date {
+  color: var(--primary);
+  font-size: 0.86rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.news-item-featured .news-date {
+  color: #8b1e3f;
+}
+
+.news-item p {
+  margin: 0;
+  color: var(--mid);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.news-item strong {
+  color: var(--dark);
+  font-weight: 700;
+}
+
 /* 现代化标题 - 移除衬线字体 */
 h2 {
   font-family: inherit;
@@ -1152,6 +1254,30 @@ code {
 
   .intro-block .release-note {
     font-size: 1.15rem;
+  }
+
+  .news-panel {
+    margin-bottom: 2rem;
+  }
+
+  .news-header {
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 1.5rem 1.35rem 1rem;
+  }
+
+  .news-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .news-list {
+    padding: 1rem 1.35rem 1.35rem;
+  }
+
+  .news-item {
+    grid-template-columns: 1fr;
+    gap: 0.45rem;
+    padding: 0.95rem;
   }
   
   .banner-btns {
