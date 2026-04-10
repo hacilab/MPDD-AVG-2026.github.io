@@ -323,6 +323,15 @@ nav ul li ul li a:hover {
   font-weight: 500;
 }
 
+.intro-block .release-note {
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 1.35rem;
+  line-height: 1.6;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: #8b1e3f;
+}
+
 /* 现代化标题 - 移除衬线字体 */
 h2 {
   font-family: inherit;
@@ -1139,6 +1148,10 @@ code {
   
   .intro-block p { 
     font-size: 1.05rem; 
+  }
+
+  .intro-block .release-note {
+    font-size: 1.15rem;
   }
   
   .banner-btns {
