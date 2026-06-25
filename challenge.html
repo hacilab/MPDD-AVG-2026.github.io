@@ -158,6 +158,125 @@
       background: var(--card-bg, #fafafa);
     }
     .param-pill span { color: var(--accent, #c0392b); font-weight: 700; }
+
+    /* ── Results section styles ── */
+    .results-banner {
+      background: linear-gradient(135deg, #c0392b 0%, #922b21 100%);
+      color: #fff;
+      border-radius: 10px;
+      padding: 1.4rem 1.8rem;
+      margin: 1.6rem 0 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+    .results-banner-icon { font-size: 2.4rem; flex-shrink: 0; }
+    .results-banner-text h3 {
+      margin: 0 0 0.3rem;
+      font-size: 1.15rem;
+      font-family: 'Source Sans 3', sans-serif;
+      font-weight: 700;
+    }
+    .results-banner-text p { margin: 0; font-size: 0.9rem; opacity: 0.9; }
+
+    .results-table-wrap { overflow-x: auto; margin: 1.2rem 0; }
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      min-width: 520px;
+    }
+    .results-table thead tr {
+      background: #2c3e50;
+      color: #fff;
+    }
+    .results-table th {
+      padding: 0.7rem 1rem;
+      text-align: left;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .results-table td {
+      padding: 0.62rem 1rem;
+      border-bottom: 1px solid var(--border, #e0e0e0);
+      vertical-align: middle;
+    }
+    .results-table tbody tr:nth-child(even) { background: #f9f9f9; }
+    .results-table tbody tr:hover { background: #fff5f5; }
+    .results-table .rank-gold   { color: #c0392b; font-weight: 700; }
+    .results-table .rank-silver { color: #555; font-weight: 600; }
+    .results-table .rank-bronze { color: #7d5c00; font-weight: 600; }
+    .results-table .score-val {
+      font-family: 'Source Code Pro', monospace;
+      font-size: 0.88rem;
+    }
+    .results-table .track-group td {
+      background: #f0f4f8;
+      font-weight: 700;
+      font-size: 0.82rem;
+      color: #555;
+      padding: 0.35rem 1rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .dash-cell { color: #bbb; }
+
+    /* ── Paper submission styles ── */
+    .submission-box {
+      background: #f0f7ff;
+      border: 1.5px solid #aad0f5;
+      border-radius: 8px;
+      padding: 1.3rem 1.6rem;
+      margin: 1.4rem 0;
+    }
+    .submission-box h4 {
+      margin: 0 0 0.6rem;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1a5f99;
+    }
+    .submission-box p { margin: 0 0 0.5rem; font-size: 0.9rem; line-height: 1.6; }
+    .submission-box p:last-child { margin-bottom: 0; }
+    .deadline-badge {
+      display: inline-block;
+      background: #c0392b;
+      color: #fff;
+      border-radius: 4px;
+      padding: 0.15rem 0.6rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      font-family: 'Source Code Pro', monospace;
+      margin-left: 0.4rem;
+    }
+    .criteria-list {
+      list-style: none;
+      padding: 0;
+      margin: 0.6rem 0 0;
+    }
+    .criteria-list li {
+      padding: 0.3rem 0 0.3rem 1.4rem;
+      position: relative;
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+    .criteria-list li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: var(--accent, #c0392b);
+    }
+    .success-callout {
+      background: #f0fff4;
+      border: 1px solid #68d391;
+      border-radius: 6px;
+      padding: 0.9rem 1.2rem;
+      font-size: 0.875rem;
+      line-height: 1.6;
+      margin: 1.2rem 0;
+      color: #276749;
+    }
+    .success-callout strong { color: #1a4731; }
   </style>
 </head>
 <body>
@@ -179,6 +298,8 @@
             <li><a href="challenge.html#tracks">Tracks &amp; Sub-tracks</a></li>
             <li><a href="challenge.html#metrics">Evaluation Metrics</a></li>
             <li><a href="challenge.html#rankings">Rankings &amp; Awards</a></li>
+            <li><a href="challenge.html#results">Competition Results</a></li>
+            <li><a href="challenge.html#paper-submission">Paper Submission</a></li>
             <li><a href="challenge.html#baseline">Baseline &amp; Resources</a></li>
           </ul>
         </li>
@@ -365,7 +486,7 @@
           <div class="step-label">Compute mean performance and cross-sub-track variance</div>
           Over the $N$ sub-tracks the team has entered:
           $$\bar{z} = \frac{1}{N}\sum_{i=1}^{N} z_i, \qquad \sigma_z = \sqrt{\frac{1}{N}\sum_{i=1}^{N}(z_i - \bar{z})^2}$$
-          $\bar{z}$ measures avera ge superiority; $\sigma_z$ measures how unevenly that performance is distributed — a large $\sigma_z$ indicates a team that excels on some sub-tracks but underperforms on others.
+          $\bar{z}$ measures average superiority; $\sigma_z$ measures how unevenly that performance is distributed — a large $\sigma_z$ indicates a team that excels on some sub-tracks but underperforms on others.
         </div>
       </li>
       <li>
@@ -389,62 +510,6 @@
   <div class="info-callout">
     <strong>Calibration note.</strong> Based on baseline results, Track-Level Scores lie in the range 0.14–0.41 (mean ≈ 0.26, std ≈ 0.07). With a typical field of 10+ teams, inter-team z-score differences per sub-track are approximately 0.3–0.5. The per-sub-track bonus of $\delta = 0.05$ therefore corresponds to roughly one-tenth of a standard deviation advantage — meaningful but not sufficient to let participation volume override genuine performance.
   </div>
-
-  <!-- <h4>Worked Example</h4>
-  <p>Three teams compete. Their z-scores on each sub-track are as follows (— = did not enter):</p>
-
-  <div class="award-table-wrap">
-    <table class="award-table">
-      <thead>
-        <tr>
-          <th>Sub-track</th>
-          <th>Team A</th>
-          <th>Team B</th>
-          <th>Team C</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Elderly-AV+P</td><td>1.6</td><td>3.2</td><td>1.4</td></tr>
-        <tr><td>Elderly-AVG+P</td><td>1.7</td><td>0.2</td><td>—</td></tr>
-        <tr><td>Elderly-G+P</td><td>1.8</td><td>0.3</td><td>—</td></tr>
-        <tr><td>Young-AV+P</td><td>1.5</td><td>0.2</td><td>1.3</td></tr>
-        <tr><td>Young-AVG+P</td><td>1.6</td><td>0.3</td><td>1.2</td></tr>
-        <tr><td>Young-G+P</td><td>1.7</td><td>—</td><td>—</td></tr>
-        <tr style="font-weight:700;">
-          <td>Sub-tracks entered ($N$)</td><td>6</td><td>5</td><td>3</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <p><strong>Team A</strong> — full coverage, consistent across all modalities and age groups:</p>
-  $$\bar{z} = \frac{1.6+1.7+1.8+1.5+1.6+1.7}{6} = 1.65, \qquad \sigma_z \approx 0.10$$
-  $$\text{G-Score}_A = 1.65 - 0.5\times0.10 + 0.05\times(6-2) = 1.65 - 0.05 + 0.20 = \mathbf{1.80}$$
-
-  <p><strong>Team B</strong> — spectacularly wins one sub-track (Elderly-AV+P, $z=3.2$) but is mediocre elsewhere, enters 5 sub-tracks:</p>
-  $$\bar{z} = \frac{3.2+0.2+0.3+0.2+0.3}{5} = 0.84, \qquad \sigma_z \approx 1.18$$
-  $$\text{G-Score}_B = 0.84 - 0.5\times1.18 + 0.05\times(5-2) = 0.84 - 0.59 + 0.15 = \mathbf{0.40}$$
-
-  <p><strong>Team C</strong> — enters only 3 sub-tracks of the same modality type (both AV+P sub-tracks plus Young-AVG+P), performs steadily:</p>
-  $$\bar{z} = \frac{1.4+1.3+1.2}{3} = 1.30, \qquad \sigma_z \approx 0.08$$
-  $$\text{G-Score}_C = 1.30 - 0.5\times0.08 + 0.05\times(3-2) = 1.30 - 0.04 + 0.05 = \mathbf{1.31}$$
-
-  <div class="award-table-wrap" style="margin-top:1rem;">
-    <table class="award-table">
-      <thead>
-        <tr><th>Rank</th><th>Team</th><th>$\bar{z}$</th><th>$\sigma_z$</th><th>Coverage bonus</th><th>G-Score</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>🥇 1</td><td><strong>Team A</strong></td><td>1.65</td><td>0.10</td><td>+0.20</td><td><strong>1.80</strong></td></tr>
-        <tr><td>🥈 2</td><td><strong>Team C</strong></td><td>1.30</td><td>0.08</td><td>+0.05</td><td><strong>1.31</strong></td></tr>
-        <tr><td>🥉 3</td><td><strong>Team B</strong></td><td>0.84</td><td>1.18</td><td>+0.15</td><td><strong>0.40</strong></td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="info-callout">
-    <strong>Key takeaway.</strong> Team B's peak z-score of 3.2 on a single sub-track is entirely cancelled by the consistency penalty (−0.59), and the coverage bonus (+0.15) does not compensate. Team C, despite entering only 3 sub-tracks of the same modality type, ranks second by combining solid average performance with near-zero variance. Participating in more sub-tracks always helps at the margin — but only if performance is maintained.
-  </div> -->
 
   <h3>Award Categories (all the awarded teams are encouraged to submit a paper)</h3>
   <div class="award-table-wrap">
@@ -476,6 +541,141 @@
     </table>
   </div>
 
+  <!-- ══════════════════════════════════════════════════════
+       SECTION: Competition Results  (NEW)
+       ══════════════════════════════════════════════════════ -->
+  <h2 id="results">Competition Results</h2>
+
+  <div class="results-banner">
+    <div class="results-banner-icon">🏆</div>
+    <div class="results-banner-text">
+      <h3>Final Leaderboard — MPDD-AVG 2026</h3>
+      <p>Competition has concluded. Congratulations to all participating teams! Results are reported as Track-Level Scores (higher is better).</p>
+    </div>
+  </div>
+
+  <div class="results-table-wrap">
+    <table class="results-table">
+      <thead>
+        <tr>
+          <th>Sub-track</th>
+          <th>🥇 1st Place</th>
+          <th>Score</th>
+          <th>🥈 2nd Place</th>
+          <th>Score</th>
+          <th>🥉 3rd Place</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="track-group"><td colspan="7">Track 1 — MPDD-Young</td></tr>
+        <tr>
+          <td><strong>Young G+P</strong></td>
+          <td class="rank-gold">chaoyi_yu</td>
+          <td class="score-val rank-gold">0.7341</td>
+          <td class="rank-silver">kchlasta</td>
+          <td class="score-val rank-silver">0.5784</td>
+          <td class="dash-cell">—</td>
+          <td class="dash-cell">—</td>
+        </tr>
+        <tr>
+          <td><strong>Young A-V+P</strong></td>
+          <td class="rank-gold">chaoyi_yu</td>
+          <td class="score-val rank-gold">0.6822</td>
+          <td class="rank-silver">kchlasta</td>
+          <td class="score-val rank-silver">0.3957</td>
+          <td class="dash-cell">—</td>
+          <td class="dash-cell">—</td>
+        </tr>
+        <tr>
+          <td><strong>Young A-V-G+P</strong></td>
+          <td class="rank-gold">chaoyi_yu</td>
+          <td class="score-val rank-gold">0.6838</td>
+          <td class="rank-silver">kchlasta</td>
+          <td class="score-val rank-silver">0.3966</td>
+          <td class="rank-bronze">linchao</td>
+          <td class="score-val rank-bronze">0.3098</td>
+        </tr>
+        <tr class="track-group"><td colspan="7">Track 2 — MPDD-Elderly</td></tr>
+        <tr>
+          <td><strong>Elderly G+P</strong></td>
+          <td class="rank-gold">chaoyi_yu</td>
+          <td class="score-val rank-gold">0.5921</td>
+          <td class="rank-silver">rnguziyyds</td>
+          <td class="score-val rank-silver">0.5252</td>
+          <td class="dash-cell">—</td>
+          <td class="dash-cell">—</td>
+        </tr>
+        <tr>
+          <td><strong>Elderly A-V+P</strong></td>
+          <td class="rank-gold">chaoyi_yu</td>
+          <td class="score-val rank-gold">0.8151</td>
+          <td class="rank-silver">rnguziyyds</td>
+          <td class="score-val rank-silver">0.5370</td>
+          <td class="dash-cell">—</td>
+          <td class="dash-cell">—</td>
+        </tr>
+        <tr>
+          <td><strong>Elderly A-V-G+P</strong></td>
+          <td class="rank-gold">chaoyi_yu</td>
+          <td class="score-val rank-gold">0.8149</td>
+          <td class="rank-silver">rnguziyyds</td>
+          <td class="score-val rank-silver">0.5882</td>
+          <td class="rank-bronze">linchao</td>
+          <td class="score-val rank-bronze">0.4136</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="info-callout">
+    <strong>Note:</strong> Track-Level Score = α · Macro-F1 + β · CCC + γ · κ, with α = β = γ = 1/3. A dash (—) indicates fewer than three teams achieved valid scores on that sub-track. Teams with valid Codabench submissions and a submitted paper are eligible for awards.
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       SECTION: Paper Submission  (NEW)
+       ══════════════════════════════════════════════════════ -->
+  <h2 id="paper-submission">Paper Submission</h2>
+
+  <div class="submission-box">
+    <h4>📄 Submission Portal</h4>
+    <p>
+      Submit your system description paper via OpenReview:<br>
+      <a href="https://openreview.net/group?id=acmmm.org/ACMMM/2026/Workshop/MPDD-AVG#tab-your-consoles" target="_blank" style="word-break:break-all;">
+        https://openreview.net/group?id=acmmm.org/ACMMM/2026/Workshop/MPDD-AVG#tab-your-consoles
+      </a>
+    </p>
+    <p>
+      <strong>Submission Deadline:</strong>
+      <span class="deadline-badge">June 25, 2026 · 23:59 AoE</span>
+    </p>
+  </div>
+
+  <h3>Eligibility</h3>
+  <p>All teams that have successfully participated in the competition and submitted their code materials are eligible to submit a paper.</p>
+
+  <h3>Formatting Requirements</h3>
+  <p>Papers must follow the <strong>ACM Multimedia 2026 main track formatting guidelines</strong>:<br>
+    <a href="https://2026.acmmm.org/site/author-instructions.html" target="_blank">https://2026.acmmm.org/site/author-instructions.html</a>
+  </p>
+  <ul>
+    <li><strong>Maximum length:</strong> 6 pages of content + up to 2 additional pages for references</li>
+    <li><strong>Review process:</strong> Single-blind (author information does not need to be anonymized)</li>
+  </ul>
+
+  <h3>Evaluation Criteria</h3>
+  <p>Submissions will be evaluated holistically across the following dimensions:</p>
+  <ul class="criteria-list">
+    <li>Novelty of the proposed approach</li>
+    <li>Model performance</li>
+    <li>Reproducibility of results</li>
+    <li>Overall quality of paper presentation</li>
+  </ul>
+
+  <div class="success-callout">
+    <strong>📢 Publication opportunity:</strong> High-quality papers will be recommended for inclusion in the ACM Multimedia 2026 proceedings. Please note that the exact number of accepted papers may be subject to minor adjustments in accordance with the guidelines of the main conference organizing committee.
+  </div>
+
   <h2 id="baseline">Baseline &amp; Resources</h2>
   <p>We provide the following materials to all registered participants:</p>
   <ul>
@@ -504,9 +704,6 @@
     <li><strong>A-V+P</strong> — <a href="https://www.codabench.org/competitions/16078/" target="_blank">https://www.codabench.org/competitions/16078/</a></li>
     <li><strong>G+P</strong> — <a href="https://www.codabench.org/competitions/16079/" target="_blank">https://www.codabench.org/competitions/16079/</a></li>
   </ul>
-
-  <h3>Paper Submission</h3>
-  <p>To be eligible for the final evaluation, each team must submit a system description paper via <strong>OpenReview</strong> (venue opens July 1, 2026). Papers must include thoroughly explained source code, well-trained models, and associated checkpoints. All submissions undergo peer review by the challenge technical program committee.</p>
 
   <div class="qrcode-section">
     <div class="qrcode-title">If you have any questions, please feel free to join our WeChat group for communication ~</div>
